@@ -4,7 +4,7 @@ public class Variabili {
 
 	public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
 
-	public static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/CORSO?useSSL=false";
+	public static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/CORSO?useSSL=false&createDatabaseIfNotExist=true";
 
 	public static final String DB_USER = "root";
 
