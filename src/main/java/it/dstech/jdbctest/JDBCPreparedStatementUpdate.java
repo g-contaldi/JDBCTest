@@ -27,10 +27,10 @@ public class JDBCPreparedStatementUpdate {
 		try {
 			dbConnection = DBUtilityConnection.getDBConnection();
 			preparedStatement = dbConnection.prepareStatement(insertTableSQL);
-			preparedStatement.setString(1, "pippo");
+			preparedStatement.setString(1, "alberto");
 //			preparedStatement.setString(2, "baudo");
 //			preparedStatement.setInt(3, 88);
-			preparedStatement.setInt(2, 1);
+			preparedStatement.setInt(2, 3);
 
 			preparedStatement.executeUpdate();
 			System.out.println("Record aggiornato nella tabella REGISTRATION!");

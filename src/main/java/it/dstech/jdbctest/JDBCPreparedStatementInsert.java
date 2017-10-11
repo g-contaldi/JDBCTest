@@ -27,9 +27,9 @@ public class JDBCPreparedStatementInsert {
 		try {
 			dbConnection = DBUtilityConnection.getDBConnection();
 			preparedStatement = dbConnection.prepareStatement(insertTableSQL);
-			preparedStatement.setString(1, "angelo");
-			preparedStatement.setString(2, "duro");
-			preparedStatement.setInt(3, 35);
+			preparedStatement.setString(1, "pippo");
+			preparedStatement.setString(2, "franco");
+			preparedStatement.setInt(3, 100);
 
 			preparedStatement.executeUpdate();
 			System.out.println("Record inserito nella tabella REGISTRATION!");

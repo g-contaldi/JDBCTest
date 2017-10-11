@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 
 import it.dstech.jdbctest.utility.DBUtilityConnection;
 
@@ -20,14 +21,22 @@ public class JDBCPreparedStatementSelect {
 
 	public static boolean selectRecordIntoTable() throws Exception {
 		Connection dbConnection = null;
-		Statement Statement = null;
+		Statement statement = null;
 		ResultSet resultSet = null;
-		String selectTableSQL = "SELECT* FROM REGISTRATION";
+		String selectTableSQL = "SELECT * FROM REGISTRATION";
 		try {
 			dbConnection = DBUtilityConnection.getDBConnection();
-			Statement = dbConnection.prepareStatement(selectTableSQL);
+			statement = dbConnection.prepareStatement(selectTableSQL);
 
-			resultSet = Statement.executeQuery(selectTableSQL);
+			resultSet = statement.executeQuery(selectTableSQL);
+
+			while (resultSet.next()) {
+				System.out.println("ID " + resultSet.getInt("id"));
+				System.out.println("NOME " + resultSet.getString("nome"));
+				System.out.println("COGNOME " + resultSet.getString("cognome"));
+				System.out.println("ETA " + resultSet.getInt("eta"));
+				System.out.println("-----");
+			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
