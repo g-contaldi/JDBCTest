@@ -8,38 +8,24 @@ import it.dstech.jdbctest.utility.DBUtilityConnection;
 
 public class JDBCPreparedStatementDelete {
 
-	public static void main(String[] argv) throws Exception {
+	public static void main(String[] args) {
 
-		try {
-			deleteRecordIntoTable();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+		deleteRecordIntoTable();
+
 	}
 
-	private static void deleteRecordIntoTable() throws Exception {
+	private static void deleteRecordIntoTable() {
 
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
+		String query = "DELETE FROM REGISTRATION " + " WHERE ID = ?";
 
-		String insertTableSQL = "DELETE FROM REGISTRATION " + " WHERE ID = ?";
+		try (Connection dbConnection = DBUtilityConnection.getDBConnection();
+				PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
 
-		try {
-			dbConnection = DBUtilityConnection.getDBConnection();
-			preparedStatement = dbConnection.prepareStatement(insertTableSQL);
 			preparedStatement.setInt(1, 1);
-
 			preparedStatement.executeUpdate();
 			System.out.println("Record eliminato nella tabella REGISTRATION!");
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
 		}
 	}
 }

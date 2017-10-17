@@ -8,39 +8,25 @@ import it.dstech.jdbctest.utility.DBUtilityConnection;
 
 public class JDBCStatementCreateTable {
 
-	public static void main(String[] argv) throws Exception {
+	public static void main(String[] args) {
 
-		try {
-			createDbUserTable();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+		createDbUserTable();
+
 	}
 
-	private static void createDbUserTable() throws Exception {
+	private static void createDbUserTable() {
 
-		Connection dbConnection = null;
-		Statement statement = null;
+		String query = "CREATE TABLE REGISTRATION " + "(ID INTEGER NOT NULL AUTO_INCREMENT, " + " NOME VARCHAR(255), "
+				+ " COGNOME VARCHAR(255), " + " ETA INTEGER, " + " PRIMARY KEY ( id ))";
 
-		String createTableSQL = "CREATE TABLE REGISTRATION " + "(ID INTEGER NOT NULL AUTO_INCREMENT, "
-				+ " NOME VARCHAR(255), " + " COGNOME VARCHAR(255), " + " ETA INTEGER, " + " PRIMARY KEY ( id ))";
+		try (Connection dbConnection = DBUtilityConnection.getDBConnection();
+				Statement statement = dbConnection.prepareStatement(query)) {
 
-		try {
-			dbConnection = DBUtilityConnection.getDBConnection();
-			statement = dbConnection.createStatement();
-
-			System.out.println(createTableSQL);
-			statement.execute(createTableSQL);
+			System.out.println(query);
+			statement.execute(query);
 			System.out.println("Tabella \"REGISTRATION\" creata con successo!");
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
 		}
 	}
 }

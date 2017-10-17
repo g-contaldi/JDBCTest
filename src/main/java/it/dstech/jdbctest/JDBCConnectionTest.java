@@ -1,34 +1,23 @@
 package it.dstech.jdbctest;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import it.dstech.jdbctest.utility.DBUtilityConnection;
 
 public class JDBCConnectionTest {
 
-	public static void main(String[] argv) {
+	public static void main(String[] args) {
 
-		try {
-			testConnection();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+		testConnection();
+
 	}
 
-	private static void testConnection() throws SQLException {
+	private static void testConnection() {
 
-		Connection dbConnection = null;
-		try {
-			dbConnection = DBUtilityConnection.getDBConnection();
+		try (Connection dbConnection = DBUtilityConnection.getDBConnection()) {
 			System.out.println("Connessione stabilita con successo");
-
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-		} finally {
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
 		}
 	}
 

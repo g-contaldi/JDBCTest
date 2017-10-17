@@ -8,40 +8,27 @@ import it.dstech.jdbctest.utility.DBUtilityConnection;
 
 public class JDBCPreparedStatementInsert {
 
-	public static void main(String[] argv) throws Exception {
+	public static void main(String[] args) {
 
-		try {
-			insertRecordIntoTable();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+		insertRecordIntoTable();
+
 	}
 
-	private static void insertRecordIntoTable() throws Exception {
+	private static void insertRecordIntoTable() {
 
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
+		String query = "INSERT INTO REGISTRATION" + "(ID, NOME, COGNOME, ETA) VALUES" + "(default,?,?,?)";
 
-		String insertTableSQL = "INSERT INTO REGISTRATION" + "(ID, NOME, COGNOME, ETA) VALUES" + "(default,?,?,?)";
+		try (Connection dbConnection = DBUtilityConnection.getDBConnection();
+				PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
 
-		try {
-			dbConnection = DBUtilityConnection.getDBConnection();
-			preparedStatement = dbConnection.prepareStatement(insertTableSQL);
 			preparedStatement.setString(1, "pippo");
 			preparedStatement.setString(2, "franco");
 			preparedStatement.setInt(3, 100);
-
 			preparedStatement.executeUpdate();
 			System.out.println("Record inserito nella tabella REGISTRATION!");
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
 		}
+
 	}
 }

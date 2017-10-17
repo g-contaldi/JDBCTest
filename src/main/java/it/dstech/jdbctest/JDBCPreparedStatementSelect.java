@@ -4,31 +4,25 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
 
 import it.dstech.jdbctest.utility.DBUtilityConnection;
 
 public class JDBCPreparedStatementSelect {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws SQLException {
 
-		try {
-			selectRecordIntoTable();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+		selectRecordIntoTable();
+
 	}
 
-	public static boolean selectRecordIntoTable() throws Exception {
-		Connection dbConnection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-		String selectTableSQL = "SELECT * FROM REGISTRATION";
-		try {
-			dbConnection = DBUtilityConnection.getDBConnection();
-			statement = dbConnection.prepareStatement(selectTableSQL);
+	private static boolean selectRecordIntoTable() throws SQLException {
 
-			resultSet = statement.executeQuery(selectTableSQL);
+		ResultSet resultSet = null;
+		String query = "SELECT * FROM REGISTRATION";
+		try (Connection dbConnection = DBUtilityConnection.getDBConnection();
+				Statement statement = dbConnection.prepareStatement(query)) {
+
+			resultSet = statement.executeQuery(query);
 
 			while (resultSet.next()) {
 				System.out.println("ID " + resultSet.getInt("id"));
@@ -40,10 +34,10 @@ public class JDBCPreparedStatementSelect {
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-		if (resultSet.isBeforeFirst()) {
+		if (resultSet.isBeforeFirst())
 			return true;
-		} else {
+		else
 			return false;
-		}
+
 	}
 }
